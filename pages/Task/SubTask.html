@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+	<meta name="keywords" content=""/>
+	<meta name="description" content=""/>
+	<title>任务提交</title>
+	<link rel="stylesheet" href="/Public/css/share.css">
+	<link rel="stylesheet" href="/Public/css/font.css" />
+	<!--JQ-->
+	<script type="text/javascript" src="/Public/js/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="/Public/js/jquery-form.js"></script>
+	<script type="text/javascript" src="/Public/js/layer_mobile2/layer.js"></script>
+	<script type="text/javascript" src="/Public/js/swiper.3.1.7.min.js"></script>
+
+	<script src="/Public/js/jquery.simplesidebar.js"></script>
+	<script src="/Public/js/jquery.SuperSlide.2.1.1.js"></script>
+	<script src="/Public/js/TouchSlide.1.0.js"></script>
+
+	<script type="text/javascript" src="/Public/js/func.js"></script>
+		<script type="text/javascript" src="/Public/js/loch.js"></script>
+	<style>
+
+		a, a.link:hover{color:#666;}
+		h1,h2,h3,h4,h5,h6{font-weight: normal;}
+
+		.login{}
+		.welcome{width:100%;margin:10% 0 10% 0;text-align: center;}
+		.welcome img{}
+		.login-inp{margin:0 30px 15px 30px;border:1px solid #fff;border-radius:25px;}
+		.login-inp label{width:4em;text-align:center;display:inline-block;color:#fff;}
+		.login-inp input{line-height:40px;color:#fff;background-color:transparent;border:none;outline: none;}
+		.login-inp .submit{display:block;background:none;width:100%;text-align:center;line-height:40px;color:#fff;font-size:16px;letter-spacing:5px;}
+		.login-txt{text-align:center;color:#fff;}
+		.login-txt a{color:#fff;padding:0 5px;}
+		.show_renws{
+			height: auto;
+		}
+	</style>
+	<script>
+		var SITE_URL  =  localStorage.getItem("SITE_URL");
+	</script>
+</head>
+<script type="text/javascript" src="/Public/js/clipboard.min.js"></script>
+<body>
+
+<div class="body_main">
+	<header class="top_header">
+		<div class="left"><a href="javascript:" class="return go-back"></a></div>
+		<div class="title">
+			任务提交
+		</div>
+	</header>
+	<!-- 头部部分 开始 -->
+	<!--<img src="/Public//kf/HTB1LCmpX3FY.1VjSZFq761dbXXav.png"/>-->
+	<div class="show_index_top" id="list">
+		<p class="shop_index_ts"><a  >新手指南 做前必看</a></p>
+
+		<div class="show_index_f">
+			<img :avatar="data.nickname" color="#0D8ABC">
+			<p class="show_dypl">{{data.nickname}}</p>
+			<p class="show_wqq">{{data.maxreward}}元</p>
+		</div>
+		<div class="show_index_sss">
+			<p> <span>任务描述：</span> {{data.mark}}</p>
+		</div>
+
+		<p style="width: 100%;height: 10px;background: #ededed;float: left;margin-top: 10px;"></p>
+		<div class="show_renws">
+			<p class="show_shbz">审核标准：</p>
+			<p class="show_sssss"><img src="/Public//kf/HTB1zHXJcLWG3KVjSZPc762kbXXav.png"/>有头像</p>
+			<p class="show_sssss"><img src="/Public//kf/HTB1zHXJcLWG3KVjSZPc762kbXXav.png"/>有作品</p>
+			<p class="show_sssss"><img src="/Public//kf/HTB1zHXJcLWG3KVjSZPc762kbXXav.png"/>案例标准</p>
+		 </div>
+			<a  action="/api/dy/SubTask">
+				<div class="welcome"><img id="img3" src="/Public/images/none.png"
+										  style="max-width: 100%;height: auto;display: block;margin: 0 auto;"></div>
+				<div class="login-form"  >
+					<div class="login-inp" style="border: none;">
+						<label style="color: #999;">上传图片</label>
+						<input type="file" onchange="changepic(this)" name="file" id="file" accept="image/jpg"
+							   placeholder="上传图片" class="password" autocomplete="off" style="color: #000;"/></div>
+					<input type="hidden" name="appkey" id="appkey" value="" />
+					<input type="hidden" name="userid" id="userid" value="" />
+					<div class="login-inp" style="border: none;background: #704eea;"><button type="submit"   class="submit" onclick="UpImg()">立即提交</button></div>
+				</div>
+			</a>
+	</div>
+
+</div>
+
+
+
+<!-- 底部联系部分 开始 -->
+
+</body>
+</html>
+
+<script>
+	function changepic() {
+		$("#prompt3").css("display", "none");
+		var reads = new FileReader();
+		f = document.getElementById('file').files[0];
+		reads.readAsDataURL(f);
+		reads.onload = function(e) {
+			document.getElementById('img3').src = this.result;
+			$("#img3").css("display", "block");
+		};
+	}
+	//复制文案
+	var clipboard = new ClipboardJS('.copy');
+	clipboard.on('success', function(e) {
+		sp_alert('复制成功');
+	});
+
+	clipboard.on('error', function(e) {
+		sp_alert('复制信息出错，请手动复制');
+	});
+
+
+
+
+
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<script>
+	var SITE_URL = localStorage.getItem("SITE_URL");
+	var list = new Vue({
+		el: '#list',
+		data: {
+			data:{}
+		}
+	});
+	var _id = GetQueryString("id");
+	if(_id){
+		//console.log(_id);
+		var _data = GetTask(_id);
+		if(_data){
+			list.data= _data;
+		}
+	}
+
+	//检查当前任务是否可以提交
+	// 已领取
+ 	Post("/api/dy/GetOneTask",{taskid:_id},function (data) {
+		console.log(data);
+		if(data.status&&data.data.status!="等待提交"){
+			$(".submit").html("已提交");
+			$(".submit").attr("disabled",true);
+			$("#file").hide();
+
+			var _img = SITE_URL+"/uploads/" + data.data.mark;
+			document.getElementById('img3').src = _img;
+		}
+	});
+	function UpImg() {
+		$(".submit").attr("disabled",true);
+		var file = document.getElementById("file").files[0];
+		var formData = new FormData();
+		formData.append('file', file);
+		var _userinfo = localStorage.getItem("userinfo");
+		if(_userinfo){
+			_userinfo = JSON.parse(_userinfo);
+			formData.append('appkey', _userinfo.appkey);
+			formData.append('userid', _userinfo.id);
+			formData.append('taskid', _id);
+		}
+		$.ajax({
+			url:SITE_URL+ "/api/dy/SubTask",
+			type: "post",
+			data: formData,
+			contentType: false,
+			processData: false,
+			mimeType: "multipart/form-data",
+			dataType: "json",
+			success: function (data) {
+				 if(!data.status)$(".submit").removeAttr("disabled");
+					sp_alert(data.msg);
+			},
+			error: function (data) {
+				$(".submit").removeAttr("disabled");
+			}
+		});
+	}
+
+
+</script>

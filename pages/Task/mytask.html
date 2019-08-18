@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <title>任务记录</title>
+    <link rel="stylesheet" href="/Public/css/share.css">
+    <link rel="stylesheet" href="/Public/css/font.css" />
+    <!--JQ-->
+    <script type="text/javascript" src="/Public/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/Public/js/jquery-form.js"></script>
+    <script type="text/javascript" src="/Public/js/layer_mobile2/layer.js"></script>
+    <script type="text/javascript" src="/Public/js/swiper.3.1.7.min.js"></script>
+
+    <script src="/Public/js/jquery.simplesidebar.js"></script>
+    <script src="/Public/js/jquery.SuperSlide.2.1.1.js"></script>
+    <script src="/Public/js/TouchSlide.1.0.js"></script>
+
+    <script type="text/javascript" src="/Public/js/func.js"></script>
+		<script type="text/javascript" src="/Public/js/loch.js"></script>
+    <script>
+        var SITE_URL  =  localStorage.getItem("SITE_URL");
+    </script>
+    <style>
+        .team_tab li{
+            width: 25%;
+        }
+    </style>
+</head>
+
+<body class="gray_bg">
+<!-- 头部部分 开始 -->
+<header class="top_header">
+    <div class="left"><a href="javascript:" class="return go-back"></a></div>
+    <div class="title">
+        我的任务
+    </div>
+</header>
+<br><br><br>
+
+<div class="team_tab">
+    <!--<li class="current"><a>审核中<label>0人</label></a></li>-->
+    <ul>
+        <li id="apply" class="current popp" onclick="doa='apply';ToShow()"><a>进行中</a></li>
+        <li id="sub" class="popp" onclick="doa='sub';ToShow()" ><a >审核中</a></li>
+        <li id="success"   class="popp"  onclick="doa='success';ToShow()" ><a >已通过</a></li>
+        <li  id="fail"   class="popp"  onclick="doa='fail';ToShow()" ><a >未通过</a></li>
+    </ul>
+</div>
+
+<div class="task_box mt tline" style="margin-top: -0px;">
+    <div class="index_rwlb" id="list">
+
+        <a :href="'../Task/show.html?id='+itms.taskid" v-for="(itms,index) in list" >
+            <div class="index_rwxq"><img :avatar="itms._nickname" :color="itms.color">
+                <div class="index_wzns"><p class="index_title">{{itms._nickname}}</p>
+                    <p class="index_ffl"><span>{{itms.types}}</span>
+                        <span class="index_gjrw">{{itms.status}}  </span></p>
+                    <p class="index_syrw">剩余数量：<span>{{(itms.total - itms.balance)>0?(itms.total - itms.balance):0 }}</span></p>
+                </div>
+                <!--<span></span>-->
+                <p class="index_qqq">{{itms.reward}}元</p>
+            </div>
+        </a>
+
+    </div>
+    <div class="con" id="Norenwu" style="display: none">
+        <div class="none">
+            <div class="none_box">
+                <img src="/Public/images/none.png" alt="">
+                <span>您并没有当前的任务</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style type="text/css">footer li{width: 33.33%;}</style>
+
+<footer class="footer">
+    <ul>
+        <li><a href="../Index/index.html"><span><i class="icon_home" style="width: 20px;height: 20px;"></i></span><p>首页</p></a></li>
+        <li class="active" ><a href="index.html"><span><i class="icon_task" style="width: 40px;height:40px;margin-top: -5px;"></i></span></a></li>
+        <li><a href="../Member/index.html"><span><i class="icon_user" style="width: 20px;height: 20px;"></i></span><p>我的</p></a></li>
+    </ul>
+</footer>
+
+</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<script>
+
+
+  var _color =  [ "#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#34495e", "#16a085", "#27ae60", "#2980b9", "#8e44ad", "#2c3e50",
+        "#f1c40f", "#e67e22", "#e74c3c", "#00bcd4", "#95a5a6", "#f39c12", "#d35400", "#c0392b", "#bdc3c7", "#7f8c8d"];
+    var list = new Vue({
+        el: '#list',
+        data: {
+
+            collect:{},
+            list: [],
+        }
+    });
+
+
+    var doa = GetQueryString("doa");
+    var _data =false;
+    Post("/api/dy/GetTask",{doact:"list"},function (data) {
+        data = data.data;
+
+        if(data){
+           // var _tasklist = localStorage.getItem("_tasklist");
+            //_tasklist = JSON.parse(_tasklist);
+            for(var i in data){
+                var _t =  GetTask(data[i].taskid);
+                data[i].mark =_t.mark;
+                data[i]._nickname =_t.nickname;
+                data[i].types =_t.types;
+                data[i].maxreward =_t.maxreward;
+            }
+            _data = data;
+            ToShow();
+        }else{
+
+        }
+    });
+
+    function ToShow() {
+        $(".popp").removeClass("current");
+        $("#"+doa).addClass("current");
+        if(!_data){
+            $("#Norenwu").show(); return ;
+        }
+        var _showData =[];var _keys = "";
+        if(doa=="apply"){
+           //已申请任务 closetime = 0; status
+            //created_at  reward _nickname types
+            _keys="等待提交";
+
+       }else if(doa=="sub"){
+            //待审核任务
+            _keys="审核中";
+        }else if(doa=="success"){
+           //审核通过任务
+            _keys="已通过";
+       }else if(doa=="fail"){
+           //未通过任务,包括已关闭任务
+            _keys="未通过";
+       }
+
+        for(var i in _data){
+            if(_data[i].status==_keys){
+                _data[i].color =_color[randomNum(0,_color.length)]
+                _showData.push(_data[i]);
+            }
+        }
+        console.log(_showData);
+        $("#Norenwu").hide();
+        list.list =_showData;
+        setTimeout(function () {
+            LetterAvatar.transform();
+        },60);
+        if(!_showData||_showData.length==0){
+            $("#Norenwu").show(); return ;
+        }
+    }
+
+</script>

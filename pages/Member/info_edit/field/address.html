@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <title>修改地址</title>
+    <link rel="stylesheet" href="/Public/css/share.css">
+    <link rel="stylesheet" href="/Public/css/font.css" />
+    <!--JQ-->
+    <script type="text/javascript" src="/Public/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/Public/js/jquery-form.js"></script>
+    <script type="text/javascript" src="/Public/js/layer_mobile2/layer.js"></script>
+    <script type="text/javascript" src="/Public/js/swiper.3.1.7.min.js"></script>
+
+    <script src="/Public/js/jquery.simplesidebar.js"></script>
+    <script src="/Public/js/jquery.SuperSlide.2.1.1.js"></script>
+    <script src="/Public/js/TouchSlide.1.0.js"></script>
+
+    <script type="text/javascript" src="/Public/js/func.js"></script>
+		<script type="text/javascript" src="/Public/js/loch.js"></script>
+    <script>
+        var SITE_URL  =  localStorage.getItem("SITE_URL");
+    </script>
+</head>
+<body>
+<!-- 头部部分 开始 -->
+<header class="top_header">
+    <div class="left"><a href="javascript:" data-url="/pages/Member/info.html" class="return go-back"></a></div>
+    <div class="title">修改地址</div>
+</header>
+<div class="mt">
+    <section class="with-main">
+        <form class="submit-ajax" data-callback="1" id="form1" name="form1" method="post" action="/pages/Member/info_edit.html">
+            <input type="hidden" name="f" value="">
+            <div class="search address">
+                <style>
+                    .address select{width: 100%;float: left;height: 40px;-webkit-box-sizing: border-box;
+                        -moz-box-sizing: border-box;
+                        box-sizing: border-box;
+                        border-radius: 5px;
+                        border: 1px #ccc solid;}
+                </style>
+                <select style="margin:0 0 5px 0;" name="province" id="province" onchange="changeArea(this)"></select>
+<select style="margin:0 0 5px 0;" name="city" id="city" onchange="changeArea(this)"></select>
+<select style="margin:0 0 5px 0;" name="area" id="area" onchange="changeArea(this)"></select>
+<input event-node="input_area" type="hidden" id="current" name="city_ids" value=""/>
+<input type="hidden" id="current_name" name="city_names" value="" />
+
+<script src="address.js"  type="text/javascript"></script>
+<script type="text/javascript">
+
+			// 地区JSON数据
+var arrNodeChild = new Array();		// 子树数组
+var selected = '';		// 默认选中的地区
+
+// 地区初始化
+var init = function() {
+	selected = selected == '' ? $('#current').val() : selected;
+	var arrSelect = selected.split(',');
+	// 获取树形结构的子树
+	var option1 = '<option value="0">-选择省份-</option>';
+	var option2 = '<option value="0">-选择城市-</option>';
+	var option3 = '<option value="0">-选择区/县-</option>';
+	$.each(json, function(i, n) {
+		var selected1 = (n.id == arrSelect[0]) ? 'selected="selected"' : '';
+		option1 += '<option value="' + n.id + '" ' + selected1 + '>' + n.title + '</option>'
+		arrNodeChild[parseInt(i.replace(/area_/, ''))] = n.child;
+		if(n.child !== null) {
+			$.each(n.child, function(ii, nn) {
+				if(n.id == arrSelect[0]) {
+					var selected2 = (nn.id == arrSelect[1]) ? 'selected="selected"' : '';
+					option2 += '<option value="' + nn.id + '" ' + selected2 + '>' + nn.title + '</option>';
+				}
+				arrNodeChild[ii] = nn.child;
+				if(nn.child !== null) {
+					$.each(nn.child, function(iii, nnn) {
+						if(nn.id == arrSelect[1]) {
+							var selected3 = (nnn.id == arrSelect[2]) ? 'selected="selected"' : '';
+							option3 += '<option value="' + nnn.id + '" ' + selected3 + '>' + nnn.title + '</option>';
+						}
+						arrNodeChild[iii] = nnn.child;
+					});
+				}
+			});
+		}
+	});
+	$('#province').append(option1);
+	$('#city').append(option2);
+	$('#area').append(option3);
+};
+// 改变地区方法
+var changeArea = function(obj) {
+	var id = $(obj).attr('id');
+	var val = $(obj).val();
+	switch(id) {
+		case 'province':
+			if(arrNodeChild[val] !== null) {
+				if(val == 0) {
+					$('#city').html('<option value="0">-选择城市-</option>');
+					$('#area').html('<option value="0">-选择区/县-</option>');
+					break;
+				}
+				var select = '<option value="0">-选择城市-</option>';
+				$.each(arrNodeChild[val], function(i, n) {
+					select += '<option value="' + n.id + '">' + n.title + '</option>';
+				});
+				$('#city').html(select);
+				$('#area').html('<option value="0">-选择区/县-</option>');
+			}
+ 			break;
+		case 'city':
+			if(arrNodeChild[val] !== null) {
+				if(val == 0) {
+					$('#area').html('<option value="0">-选择区/县-</option>');
+					break;
+				}
+				var select = '<option value="0">-选择区/县-</option>';
+				$.each(arrNodeChild[val], function(i, n) {
+					select += '<option value="' + n.id + '">' + n.title + '</option>';
+				});
+				$('#area').html(select);
+			}
+			break;
+	}
+	var current = new Array();
+	typeof($('#province').val()) !== 'undefined' && current.push($('#province').val());
+	typeof($('#city').val()) !== 'undefined' && current.push($('#city').val());
+	typeof($('#area').val()) !== 'undefined' && current.push($('#area').val());
+	$('#current').val(current.join(','));
+	var currentName = new Array();
+	$('#province option:selected').html() != '-选择省份-' && currentName.push($('#province option:selected').html());
+	$('#city option:selected').html() != '-选择城市-' && currentName.push($('#city option:selected').html());
+	$('#area option:selected').html() != '-选择区/县-' && currentName.push($('#area option:selected').html());
+	$('#current_name').val(currentName.join(' '));
+} 
+
+init();
+</script>            </div>
+            <div class="search">
+                <input type="hidden" name="field" value="address">
+                <input style="width: 100%; height: 40px; line-height: 40px;" type="text" name="value" value="" placeholder="更新地址信息">
+            </div>
+            <div class="btn">
+                <button type="submit">确定</button>
+            </div>
+        </form>
+    </section>
+</div>
+
+</body>
+</html>
+
+<script>
+    $(function(){
+        $('.btn_small').click(function(){
+            $('#form1').submit();
+        })
+
+    })
+
+    function submit_callback(data){
+        if( data.status == 1 ) {
+            window.location.href = data.url;
+        } else {
+            sp_tip(data.info);
+        }
+    }
+</script>

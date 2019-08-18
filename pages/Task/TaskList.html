@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <title>托管中心</title>
+
+    <link rel="stylesheet" href="/Public/css/share.css">
+    <link rel="stylesheet" href="/Public/css/font.css" />
+    <!--JQ-->
+    <script type="text/javascript" src="/Public/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/Public/js/jquery-form.js"></script>
+    <script type="text/javascript" src="/Public/js/layer_mobile2/layer.js"></script>
+    <script type="text/javascript" src="/Public/js/swiper.3.1.7.min.js"></script>
+
+    <script src="/Public/js/jquery.simplesidebar.js"></script>
+    <script src="/Public/js/jquery.SuperSlide.2.1.1.js"></script>
+    <script src="/Public/js/TouchSlide.1.0.js"></script>
+
+    <script type="text/javascript" src="/Public/js/func.js"></script>
+		<script type="text/javascript" src="/Public/js/loch.js"></script>
+    <style type="text/css">
+        #customers {
+            /*font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;*/
+            width: 90%;
+            border-collapse: collapse;
+            margin-left: 5%;
+            margin-top: 50px;
+        }
+
+        #customers td,
+        #customers th {
+            font-size: 1.13em;
+            border: 1px solid #7750f7;
+            padding: 3px 3px 3px 3px;
+        }
+
+        #customers th {
+            /*font-size: 1.1em;*/
+            text-align: left;
+            padding-top: 5px;
+            padding-bottom: 4px;
+            background-color: #7750f7;
+            color: #ffffff;
+        }
+
+        #customers tr.alt td {
+            color: #000000;
+            background-color: #cddbf3;
+        }
+    </style>
+    <script>
+        var SITE_URL  =  localStorage.getItem("SITE_URL");
+    </script>
+
+</head>
+
+<body style="background: #f6f6f6;">
+<!-- 头部部分 开始 -->
+<header class="top_header">
+    <div class="left"><a href="javascript:" data-url="index.html" class="return go-back"></a></div>
+    <div class="title">托管记录</div>
+</header>
+<div class="mt">
+
+
+    <section class="profit-main" style="background-color: #f6f6f6;">
+
+       <!--<div class="tab">-->
+            <!--<span class="cur"><a href="/pages/Member/sale.html">分享收益</a></span>-->
+            <!--<span><a href="/pages/Member/sale_fx.html">业绩收益</a></span>-->
+        <!--</div>-->
+
+        <table id="customers">
+            <tr><th>账户</th><th>累计佣金</th><th>时间</th><th>状态</th></tr>
+            <tr v-for="(itms,index) in list "><td>{{itms.phone}}</td><td>{{itms.gongzi}}</td>
+                <td>{{itms.updated_at}}</td>
+                <td>{{itms.status}}</td></tr>
+
+        </table>
+
+
+    </section>
+
+
+
+</div>
+
+</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<script>
+    $(function(){
+        $('.btn_small').click(function(){
+            $('#form1').submit();
+        })
+    });
+
+    function submit_callback(data){
+        if( data.status == 1 ) {
+            window.location.href = data.url;
+        } else {
+            sp_tip(data.info);
+        }
+    }
+    var list = new Vue({
+        el: '#customers',
+        data: {
+            collect:{},
+            list: [],
+        }
+    });
+
+    Post("/api/dy/GetCodes",{},function (data) {
+        for(var i in data.data){
+            if(data.data[i].status){
+                data.data[i].status= "--";
+            }else{
+                data.data[i].status= "<span style='color: red'>异常</span>";
+            }
+        }
+        list.list = data.data ;
+
+    })
+
+
+</script>

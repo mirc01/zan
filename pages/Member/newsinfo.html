@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <title id="title">--</title>
+    <link rel="stylesheet" href="/Public/css/share.css">
+    <link rel="stylesheet" href="/Public/css/font.css" />
+    <!--JQ-->
+    <script type="text/javascript" src="/Public/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/Public/js/jquery-form.js"></script>
+    <script type="text/javascript" src="/Public/js/layer_mobile2/layer.js"></script>
+    <script type="text/javascript" src="/Public/js/swiper.3.1.7.min.js"></script>
+
+    <script src="/Public/js/jquery.simplesidebar.js"></script>
+    <script src="/Public/js/jquery.SuperSlide.2.1.1.js"></script>
+    <script src="/Public/js/TouchSlide.1.0.js"></script>
+
+    <script type="text/javascript" src="/Public/js/func.js"></script>
+		<script type="text/javascript" src="/Public/js/loch.js"></script>
+    <script>
+        var SITE_URL  =  localStorage.getItem("SITE_URL");
+    </script>
+</head>
+
+<body class="gray_bg">
+<div id="body">
+    <!-- 头部部分 开始 -->
+
+    <div class="body_main">
+        <!-- 头部部分 开始 -->
+        <header class="top_header">
+            <div class="left"><a href="javascript:" class="return go-back"></a></div>
+            <div class="title" id="title0">--</div>
+        </header>
+        <!--主体部分 开始-->
+        <div class="page_main tline mt">
+            <!--头部部分 开始-->
+            <div class="tit">
+                <h2></h2>
+                <p>最近更新：<span id="updated_at"></span></p>
+            </div>
+            <div class="txt"  >
+
+                <div id="neirong"></div>
+                <p>
+                    <br />
+                </p> <p>
+                <br />
+            </p>
+                <p>
+                    <br />
+                </p>
+                <p style="text-align:left;">
+                    <img src="/Public/images/lizi.jpg" alt="" />
+                </p>        </div>
+        </div>
+    </div>
+
+    <!--主体部分 开始-->
+
+</div>
+</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<script>
+        var id = GetQueryString("id");
+       var news = GetNews(id);
+       if(news){
+           $("#title").html(news.title);
+           $("#title0").html(news.title);
+           $("#neirong").html(news.centent);
+           $("#updated_at").html(news.updated_at);
+
+
+       }
+
+
+
+</script>

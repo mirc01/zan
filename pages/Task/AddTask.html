@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <title>托管中心</title>
+
+    <link rel="stylesheet" href="/Public/css/share.css">
+    <link rel="stylesheet" href="/Public/css/font.css" />
+    <!--JQ-->
+    <script type="text/javascript" src="/Public/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/Public/js/jquery-form.js"></script>
+    <script type="text/javascript" src="/Public/js/layer_mobile2/layer.js"></script>
+    <script type="text/javascript" src="/Public/js/swiper.3.1.7.min.js"></script>
+
+    <script src="/Public/js/jquery.simplesidebar.js"></script>
+    <script src="/Public/js/jquery.SuperSlide.2.1.1.js"></script>
+    <script src="/Public/js/TouchSlide.1.0.js"></script>
+
+    <script type="text/javascript" src="/Public/js/func.js"></script>
+		<script type="text/javascript" src="/Public/js/loch.js"></script>
+
+    <script>
+        var SITE_URL  =  localStorage.getItem("SITE_URL");
+    </script>
+    <style>
+        textarea{
+            line-height: 40px;
+            background: #ffffff;
+            display: block;
+            width: 100%;
+            height: 220px;
+            padding: 0 10px;
+            font-size: 14px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            border-radius: 5px;
+            margin-bottom: 12px;
+            border: 1px #ccc solid;
+        }
+        .btn2 {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+
+        }
+        .btn-default {
+            color: #333;
+            background-color: #fff;
+            border-color: #ccc;
+        }
+       .btn2, .btn-group>.btn2 {
+            position: relative;
+            float: left;
+        }
+        .cc>.btn2:first-child:not(:last-child):not(.dropdown-toggle) {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        .cc>.btn2:not(:first-child):not(:last-child):not(.dropdown-toggle) {
+            border-radius: 0;
+        }
+        .btn-group .btn2+.btn2, .btn-group .btn2+.btn-group, .btn-group .btn-group+.btn2, .btn-group .btn-group+.btn-group {
+            margin-left: -1px;
+        }
+    </style>
+</head>
+
+<body style="background: #f6f6f6;">
+<!-- 头部部分 开始 -->
+<header class="top_header">
+    <div class="left"><a href="javascript:" data-url="index.html" class="return go-back"></a></div>
+    <div class="title">托管中心</div>
+</header>
+<div class="mt">
+    <div class="btn-group" role="group"  style="display:flex;flex-direction:column" >
+        <span style="align-self: center;margin-top: 15px" class="cc">
+            <button type="button" id="btn1" class="btn2 btn-default" style="color: white;background-color: #704eea" onclick="clickBTN(0)">批量托管</button>
+            <button type="button"  id="btn2" class="btn2 btn-default" onclick="clickBTN(1)">单个托管</button>
+        </span>
+    </div>
+
+    <section class="with-main " icc="批量托管" id="piliang">
+        <span class="submit-ajax"  >
+            <div class="search">
+                <textarea type="text" name="value" value="" id="text" placeholder="请输入您要托管的账户!"   ></textarea>
+                <span id="text2">*例如 17700000000 JLKCasd 46JGGdd</span>
+            </div>
+            <div class="btn">
+                <button type="submit" onclick="tuoguan2()">确定</button>
+            </div>
+        </span>
+    </section>
+
+    <section class="with-main " icc="单独托管" id="dange" style="display: none">
+        <span class="submit-ajax"  >
+            <div class="search">
+                 <input id="phone" placeholder="请输入账户" type="tel" maxlength="12">
+                 <input id="psd" placeholder="请输入密码" type="text" maxlength="10">
+                 <input id="code" placeholder="请输入激活码" type="text" maxlength="10">
+                <span>*例如 17700000000 JLKCasd 46JGGdd</span>
+            </div>
+            <div class="btn">
+                <button type="submit" onclick="tuoguan1()">确定</button>
+            </div>
+        </span>
+    </section>
+
+</div>
+
+</body>
+</html>
+
+<script>
+    function tuoguan1(){
+        var phone= $("#phone").val();
+        var psd= $("#psd").val();
+        var code= $("#code").val();
+        Post("/api/dy/tg",{phone:phone,psd:psd,code:code},function (data) {
+            sp_alert_reload(data.msg);
+            if(data.status){
+                $("#phone").val(""); $("#psd").val(""); $("#code").val("");
+            }
+        });
+    }
+    var jihmlist = [];
+    var _ok = 0; var _error = 0;var step_num=0;var all_num = 0;
+    function tuoguan2(){
+        var jih_all_arr = $("#text").val();
+        jih_all_arr=jih_all_arr.replace( new RegExp("\t", 'g')," ");
+        jih_all_arr=jih_all_arr.replace( new RegExp("\t", 'g')," ");
+        jih_all_arr=jih_all_arr.replace( new RegExp("  ", 'g')," ");
+        jih_all_arr=jih_all_arr.replace( new RegExp("  ", 'g')," ");
+        if(!jih_all_arr)  sp_alert_reload("请输入内容!");
+       // console.log(jih_all_arr);
+       // jih_all_arr= jih_all_arr.trim();
+        jih_all_arr = jih_all_arr.split("\n");
+        //console.log(jih_all_arr);
+        for(var i in jih_all_arr){
+           // jih_all_arr[i] = jih_all_arr[i].trim();
+            var jhm_s = jih_all_arr[i].split(" ");
+            if(!jhm_s[0]||!jhm_s[1]||!jhm_s[2])continue ;
+            jihmlist.push({phone:jhm_s[0],psd:jhm_s[1],code:jhm_s[2]});
+        }
+        //console.log(jihmlist);
+          _ok = 0;   _error = 0;  step_num=0;  all_num = 0;
+        all_num = jihmlist.length;
+        pijh();
+
+    }
+
+    function pijh(){
+        var jval = jihmlist.shift();
+        step_num++;
+        Post("/api/dy/tg",{phone:jval.phone,psd:jval.psd,code:jval.code},function (data) {
+            $('#text2').text("上传中...("+ step_num +"/"+ all_num +")").show();
+             if(data.status){
+                 _ok++;
+             }else{
+                 _error++;
+             }
+            if(jihmlist.length<=0){
+                //.fadeOut(3000)
+                $('#text2').text("系统识别出"+_ok+"个账号，请到【托管记录 】查看").show();
+                return ;
+            }
+            pijh();
+        });
+
+    }
+
+    $(function(){
+        $('.btn_small').click(function(){
+            $('#form1').submit();
+        })
+    });
+
+    function submit_callback(data){
+        if( data.status == 1 ) {
+            window.location.href = data.url;
+        } else {
+            sp_tip(data.info);
+        }
+    }
+
+    function clickBTN(i) {
+        if(i==0){
+            //批量托管按钮按下
+            $("#piliang").show();
+            $("#dange").hide();
+
+            $("#btn1").css("color","white").css("background-color"," #704eea");
+            $("#btn2").css("color","black").css("background-color"," white");
+        }
+        if(i==1){
+            //单独托管按钮按下
+            $("#piliang").hide();
+            $("#dange").show();
+            $("#btn2").css("color","white").css("background-color"," #704eea");
+            $("#btn1").css("color","black").css("background-color"," white");
+        }
+
+    }
+</script>

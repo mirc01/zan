@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <title>个人信息</title>
+    <link rel="stylesheet" href="/Public/css/share.css">
+    <link rel="stylesheet" href="/Public/css/font.css" />
+    <!--JQ-->
+    <script type="text/javascript" src="/Public/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/Public/js/jquery-form.js"></script>
+    <script type="text/javascript" src="/Public/js/layer_mobile2/layer.js"></script>
+    <script type="text/javascript" src="/Public/js/swiper.3.1.7.min.js"></script>
+
+    <script src="/Public/js/jquery.simplesidebar.js"></script>
+    <script src="/Public/js/jquery.SuperSlide.2.1.1.js"></script>
+    <script src="/Public/js/TouchSlide.1.0.js"></script>
+
+    <script type="text/javascript" src="/Public/js/func.js"></script>
+		<script type="text/javascript" src="/Public/js/loch.js"></script>
+    <script>
+        var SITE_URL  =  localStorage.getItem("SITE_URL");
+    </script>
+</head>
+
+<body class="gray_bg">
+<header class="top_header">
+    <div class="left"><a href="javascript:"  class="return go-back"></a></div>
+    <div class="title">认证中心</div>
+</header>
+<div class="mt">
+    <section class="with-main ">
+        <form class="submit-ajax"  id="form1" name="form1" method="post" action="/api/dy/setinfo">
+            <div class="search">
+
+                <input type="text" name="truename" id="truename"  value="" placeholder="请输入真实姓名"/>
+            </div>
+            <div class="search">
+
+                <input type="text" name="alipay"  id="alipay" value="" placeholder="请输入支付宝账户"/>
+            </div>
+            <p style="margin-left: 25px">* 为了您账户安全,您只有一次认证机会.</p>
+            <div class="btn">
+                <button type="submit" id="btns">确定</button>
+            </div>
+        </form>
+    </section>
+</div>
+
+</body>
+</html>
+<script>
+    function   submit_callback(data) {
+        // data-callback="1" 可调用
+        console.log("data==",data);
+    }
+    var userinfo = localStorage.getItem("userinfo");
+    if(userinfo){
+        userinfo = JSON.parse(userinfo);
+        if(userinfo.truename&&userinfo.alipay){
+
+            $("#btns").html("您已通过认证");
+             $("#truename").attr("disabled",true);
+            $("#alipay").attr("disabled",true);
+            $("#btns").attr("disabled",true);
+        }
+    }
+
+
+</script>

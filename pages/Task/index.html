@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <title>任务中心</title>
+    <link rel="stylesheet" href="/Public/css/share.css">
+    <link rel="stylesheet" href="/Public/css/font.css" />
+    <!--JQ-->
+    <script type="text/javascript" src="/Public/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/Public/js/jquery-form.js"></script>
+    <script type="text/javascript" src="/Public/js/layer_mobile2/layer.js"></script>
+    <script type="text/javascript" src="/Public/js/swiper.3.1.7.min.js"></script>
+
+    <script src="/Public/js/jquery.simplesidebar.js"></script>
+    <script src="/Public/js/jquery.SuperSlide.2.1.1.js"></script>
+    <script src="/Public/js/TouchSlide.1.0.js"></script>
+
+    <script type="text/javascript" src="/Public/js/func.js"></script>
+		<script type="text/javascript" src="/Public/js/loch.js"></script>
+    <script>
+        var SITE_URL  =  localStorage.getItem("SITE_URL");
+    </script>
+</head>
+<body class="gray_bg" style="background: #fff;">
+<!-- 头部部分 开始 -->
+
+<div class="task_top">
+	
+</div>
+
+<div class="task_nav">
+	<ul>
+        <a href="AddTask.html">
+            <li>
+                <img src="/Public/kf/HTB1FC0scMaH3KVjSZFj763FWpXab.png"/>
+                <p>托管中心</p>
+            </li>
+        </a>
+        <a href="TaskList.html">
+            <li>
+                <img src="/Public/images/tgjl.png"/>
+                <p>托管记录</p>
+            </li>
+        </a>
+        <a href="vip.html">
+            <li>
+                <img src="/Public/kf/HTB1IGdvcL1G3KVjSZFk761K4XXaq.png"/>
+                <p>开通会员</p>
+            </li>
+        </a>
+
+        <a href="../Public/share.html">
+            <li>
+                <img src="/Public/kf/HTB1R2BvcUGF3KVjSZFv762_nXXa6.png"/>
+                <p>邀请好友</p>
+            </li>
+        </a>
+
+	</ul>
+</div>
+
+
+
+
+<div class="task_news">
+	<p class="task_news_title">赞多多新闻</p>
+	
+	<div class="task_news_nr">
+	
+	        <ul id="list">
+                <li  v-for="(itms,index) in list" > <a  :href="'../Member/newsinfo.html?id='+itms.id" >{{itms.title}} <span>&nbsp;</span></a>
+                <br>
+                </li>
+
+            </ul>
+	
+	</div>
+	
+	
+	<div class="task_zwnr">
+		<img src="/Public/kf/HTB1wYXxcMKG3KVjSZFL761MvXXaA.png"/>
+		<p>没有更多啦</p>
+	</div>
+</div>
+<style type="text/css">footer li{width: 33.33%;}</style>
+<footer class="footer">
+    <ul>
+        <li><a href="../Index/index.html"><span><i class="icon_home" style="width: 20px;height: 20px;"></i></span><p>首页</p></a></li>
+        <li class="active" ><a href="index.html"><span><i class="icon_task" style="width: 40px;height:40px;margin-top: -5px;"></i></span></a></li>
+        <li><a href="../Member/index.html"><span><i class="icon_user" style="width: 20px;height: 20px;"></i></span><p>我的</p></a></li>
+    </ul>
+</footer>
+</body>
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<script>
+
+    var list = new Vue({
+        el: '#list',
+        data: {
+            collect:{},
+            list: [],
+        }
+    });
+    ShowNews("公告");
+    Get("/api/dy/GetNews",{},function (data) {
+        if(!data.status) return ;
+
+        localStorage.setItem("news",JSON.stringify(data.data));
+        ShowNews("公告");
+    });
+
+</script>

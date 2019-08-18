@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <title>推广赚钱</title>
+    <link rel="stylesheet" href="/Public/css/share.css">
+    <link rel="stylesheet" href="/Public/css/font.css" />
+    <!--JQ-->
+    <script type="text/javascript" src="/Public/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/Public/js/jquery-form.js"></script>
+    <script type="text/javascript" src="/Public/js/layer_mobile2/layer.js"></script>
+    <script type="text/javascript" src="/Public/js/swiper.3.1.7.min.js"></script>
+
+    <script src="/Public/js/jquery.simplesidebar.js"></script>
+    <script src="/Public/js/jquery.SuperSlide.2.1.1.js"></script>
+    <script src="/Public/js/TouchSlide.1.0.js"></script>
+    <script type="text/javascript" src="/Public/js/qrcode.min.js"></script>
+    <script type="text/javascript" src="/Public/js/func.js"></script>
+		<script type="text/javascript" src="/Public/js/loch.js"></script>
+    <script>
+        var SITE_URL  =  localStorage.getItem("SITE_URL");
+    </script>
+</head>
+<style>
+    html{
+        height: 100%;
+    }
+
+    button{position: absolute;width: 100px;height: 30px;background: none;border: 1px #fff solid;border-radius: 5px; left: 50%; top: 510px; margin-left: -50px;color: #fff;}
+</style>
+<body style="background: #20255c">
+<header class="top_header">
+    <div class="left"><a href="javascript:"  class="return go-back"></a></div>
+    <div class="title">邀请好友</div>
+</header>
+<div id="qrcode" style="display: none"></div>
+<div style="margin-top: 40px">
+    <img src="" id="qrcodeimg" style="width: 100%" class="ewmimg" onclick="save_img()" />
+</div>
+
+</body>
+</html>
+
+<script>
+   var  SITE_URL = localStorage.getItem("SITE_URL");
+
+    var shar_url = SITE_URL +"/pages/Public/reg.html" ;
+    var _userinfo = localStorage.getItem("userinfo");
+    if(_userinfo){
+        _userinfo = JSON.parse(_userinfo);
+        shar_url = SITE_URL +"/pages/Public/reg.html?yqr="+_userinfo.username ;
+    }
+   var qrcode = new QRCode(document.getElementById("qrcode"), {
+       width : 400,//设置宽高
+       height : 400
+   });
+   //第一次默认生成的包含信息
+   qrcode.makeCode(shar_url);
+
+
+        layer.open({
+            type: 2,
+            content: '正在生成二维码..'
+        });
+        // layer.closeAll();
+        function drawAndShareImage(){
+            var canvas = document.createElement("canvas");
+            canvas.width = 414;
+            canvas.height = 689;
+            var context = canvas.getContext("2d");
+
+            context.rect(0 , 0 , canvas.width , canvas.height);
+            context.fillStyle = "#fff";
+            context.fill();
+
+            var myImage = new Image();
+            myImage.src =   "/Public/images/bg.jpg";    //背景图片  你自己本地的图片或者在线图片
+            myImage.crossOrigin = 'Anonymous';
+
+            myImage.onload = function(){
+                context.drawImage(myImage , 0 , 0 , 414 , 689);
+
+               // context.font = "60px Courier New";
+                //context.fillText("我是文字",350,450);
+
+                var myImage2 = new Image();
+
+               // shar_url="http://qr.topscan.com/api.php?bg=ffffff&fg=000000&el=l&w=200&m=10&text="+shar_url;
+                myImage2.src = $("#qrcode img ").attr("src") // shar_url ;// SITE_URL +"/Public/images/2.png";   //你自己本地的图片或者在线图片
+
+
+                myImage2.crossOrigin = 'Anonymous';
+
+                myImage2.onload = function(){
+                    context.drawImage(myImage2 , 63 , 546 , 81 , 81);
+                    var base64 = canvas.toDataURL("image/png");  //"image/png" 这里注意一下
+                    var img = document.getElementById('qrcodeimg');
+
+                    // document.getElementById('avatar').src = base64;
+                    img.setAttribute('src' , base64);
+                    layer.closeAll();
+                }
+            }
+        }
+        drawAndShareImage()
+
+
+
+    // function create_qrcode()
+    // {
+    //     var url = "../Qrcode/qrcode.html";
+    //     layer.open({
+    //         type: 2,
+    //         content: '正在生成二维码..'
+    //     });
+    //     $.post(url,{post_id:0},function(data){
+    //         if( data.status == 1 ) {
+    //             $('#qrcodeimg').attr('src',data.url);
+    //         }
+    //         layer.closeAll();
+    //     },'json')
+    // }
+    // create_qrcode();
+
+    function save_img(){
+            if(typeof lbuilder=="undefined"){
+                sp_alert("长按或截图保存!");
+                return;
+            }
+        var img = $('#qrcodeimg').attr('src');
+        //保存图片到相册
+        lbuilder.Native.saveImage(img, function(message){
+            sp_alert('二维码已经保存到相册');
+        }, function(err){
+            sp_alert("save fail"+err);
+        });
+    }
+</script>
+

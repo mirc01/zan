@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+	<meta name="keywords" content=""/>
+	<meta name="description" content=""/>
+	<title>快手-任务大厅</title>
+	<link rel="stylesheet" href="/Public/css/share.css">
+	<link rel="stylesheet" href="/Public/css/font.css" />
+	<!--JQ-->
+	<script type="text/javascript" src="/Public/js/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="/Public/js/jquery-form.js"></script>
+	<script type="text/javascript" src="/Public/js/layer_mobile2/layer.js"></script>
+	<script type="text/javascript" src="/Public/js/swiper.3.1.7.min.js"></script>
+
+	<script src="/Public/js/jquery.simplesidebar.js"></script>
+	<script src="/Public/js/jquery.SuperSlide.2.1.1.js"></script>
+	<script src="/Public/js/TouchSlide.1.0.js"></script>
+
+	<script type="text/javascript" src="/Public/js/func.js"></script>
+		<script type="text/javascript" src="/Public/js/loch.js"></script>
+	<script>
+		var SITE_URL  =  localStorage.getItem("SITE_URL");
+	</script>
+</head>
+<body class="gray_bg">
+<header class="top_header">
+	<div class="left"><a href="javascript:" class="return go-back"></a></div>
+	<div class="title">
+		快手-任务大厅
+	</div>
+</header>
+<!-- 头部部分 开始 -->
+<div class="body_main task_box mt tline" style="margin-top: 20px;border: none;">
+	<div class="task_box mt tline" style="margin-top: -0px;">
+		<div class="con">
+			<div class="none">
+				<div class="none_box">
+					<img src="/Public/images/none.png" alt="">
+					<span>您目前并没有快手任务</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="task_list" id="list">
+		<a  :href="'../Task/show.html?id='+itms.id" v-for="(itms,index) in list"  >
+			<div class="index_rwxq" style="width: 92%;margin-left: 4%;">
+				<img src="/Public/images/logo.png"/>
+
+				<div class="index_wzns"><p class="index_title">{{itms.nickname}}</p><p class="index_ffl"><span>{{itms.types}}</span> <span class="index_gjrw">优质任务</span> </p>
+					<p class="index_syrw">剩余数量：<span>{{(itms.total - itms.balance)>0?(itms.total - itms.balance):0 }}</span></p>
+				</div><p class="index_qqq">{{itms.maxreward}}元<span></span>
+			</p>
+			</div>
+		</a>
+	</div>
+</div>
+
+<style type="text/css">footer li{width: 33.33%;}</style>
+<footer class="footer">
+	<ul>
+		<li><a href="index.html"><span><i class="icon_home" style="width: 20px;height: 20px;"></i></span><p>首页</p></a></li>
+		<li class="active" ><a href="../../index.html"><span><i class="icon_task" style="width: 40px;height:40px;margin-top: -5px;"></i></span></a></li>
+		<li><a href="../Member/index.html"><span><i class="icon_user" style="width: 20px;height: 20px;"></i></span><p>我的</p></a></li>
+	</ul>
+</footer>
+</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<script>
+	var list = new Vue({
+		el: '#list',
+		data: {
+			collect:{},
+			list: [],
+		}
+	});
+	//list.list = GetAllTask();
+
+</script>

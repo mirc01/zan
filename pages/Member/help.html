@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <title>新手指南</title>
+    <link rel="stylesheet" href="/Public/css/share.css">
+    <link rel="stylesheet" href="/Public/css/font.css" />
+    <!--JQ-->
+    <script type="text/javascript" src="/Public/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/Public/js/jquery-form.js"></script>
+    <script type="text/javascript" src="/Public/js/layer_mobile2/layer.js"></script>
+    <script type="text/javascript" src="/Public/js/swiper.3.1.7.min.js"></script>
+
+    <script src="/Public/js/jquery.simplesidebar.js"></script>
+    <script src="/Public/js/jquery.SuperSlide.2.1.1.js"></script>
+    <script src="/Public/js/TouchSlide.1.0.js"></script>
+
+    <script type="text/javascript" src="/Public/js/func.js"></script>
+		<script type="text/javascript" src="/Public/js/loch.js"></script>
+    <script>
+        var SITE_URL  =  localStorage.getItem("SITE_URL");
+    </script>
+</head>
+
+<body class="gray_bg">
+<div id="body">
+    <!-- 头部部分 开始 -->
+    <header class="top_header">
+        <div class="left"><a href="javascript:"   class="return go-back"></a></div>
+        <div class="title">新手指南</div>
+    </header>
+    <!--主体部分 开始-->
+    <div class="body_main tline mt info_main">
+
+        <ul style="margin-top: 7px" id="list">
+            <li  v-for="(itms,index) in list">
+                <a :href="'newsinfo.html?id='+itms.id"><p>{{itms.title}}</p>
+                    <span>&nbsp;</span></a>
+            </li>
+
+        </ul>
+    </div>
+</div>
+</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<script>
+
+    var list = new Vue({
+        el: '#list',
+        data: {
+            collect:{},
+            list: [],
+        }
+    });
+    ShowNews("新手指南");
+    Get("/api/dy/GetNews",{},function (data) {
+        if(!data.status) return ;
+
+        localStorage.setItem("news",JSON.stringify(data.data));
+        ShowNews("新手指南");
+    });
+
+</script>

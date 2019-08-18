@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>赞多多</title>
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="description" content=""/>
+    <!--JQ-->
+    <script type="text/javascript" src="/Public/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/Public/js/jquery-form.js"></script>
+    <script type="text/javascript" src="/Public/js/layer_mobile2/layer.js?"></script>
+    <script type="text/javascript" src="/Public/js/swiper.3.1.7.min.js"></script>
+
+    <script src="/Public/js/jquery.simplesidebar.js"></script>
+    <script src="/Public/js/jquery.SuperSlide.2.1.1.js"></script>
+    <script src="/Public/js/TouchSlide.1.0.js"></script>
+
+    <script type="text/javascript" src="/Public/js/func.js"></script>
+		<script type="text/javascript" src="/Public/js/loch.js"></script>
+
+	<link rel="stylesheet" href="/Public/css/share.css">
+	<link rel="stylesheet" href="/Public/css/font.css" />
+</head>
+<body class="gray_bg" style="background:#fff;">
+<div id="body">
+    <div class="body_main" style="margin-top:-34px;">
+        <!--banner部分 开始  ../Page/show/id/10.html -->
+        <div class="index_lb"><a href="../Member/help.html"><img src="/Public/images/top.png"/></a></div>
+        <div class="index_xslb">
+            <a href="douying.html" class="index_xslb_a"></a>
+            <a href="kuaishou.html" class="index_xslb_b"></a>
+        </div>
+        <div class="index_rwlb" id="list">
+        	<p class="index_tjrw">推荐任务</p>
+			<a :href="'../Task/show.html?id='+itms.id" v-for="(itms,index) in list" >
+				<div class="index_rwxq"><img src="/Public/images/logo.png"/>
+					<div class="index_wzns"><p class="index_title">{{itms.nickname}}</p>
+						<p class="index_ffl"><span>{{itms.types}}</span>
+							<span class="index_gjrw">网红  </span></p>
+						<p class="index_syrw">剩余数量：<span>{{(itms.total - itms.balance)>0?(itms.total - itms.balance):0 }}</span></p>
+					</div>
+					<p class="index_qqq">{{itms.maxreward}}元<span></span></p>
+				</div>
+			</a>
+
+        </div>
+
+    <!-- 底部联系部分 开始 -->
+    <style type="text/css">footer li{width: 33.33%;}</style>
+<footer class="footer">
+    <ul>
+        <li class="active" ><a href="index.html"><span><i class="icon_home" style="width: 20px;height: 20px;"></i></span><p>首页</p></a></li>
+        <li><a href="../Task/index.html"><span><i class="icon_task" style="width: 40px;height:40px;margin-top: -5px;"></i></span></a></li>
+        <li><a href="../Member/index.html"><span><i class="icon_user" style="width: 20px;height: 20px;"></i></span><p>我的</p></a></li>
+    </ul>
+</footer>
+</div>
+</div>
+
+</body>
+</html>
+
+<script>
+
+    $(document).ready(function () {
+        //幻灯片
+        var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            paginationClickable: true,
+            spaceBetween: 30,
+            centeredSlides: true,
+            autoplay: 4000,
+            autoplayDisableOnInteraction: false
+        });
+    });
+	//文字向上滚动
+	(function($){
+		$.fn.FontScroll = function(options){
+			var d = {time: 3000,s: 'fontColor',num: 1}
+			var o = $.extend(d,options);
+
+			this.children('ul').addClass('line');
+			var _con = $('.line').eq(0);
+			var _conH = _con.height(); //滚动总高度
+			var _conChildH = _con.children().eq(0).height();//一次滚动高度
+			var _temp = _conChildH;  //临时变量
+			var _time = d.time;  //滚动间隔
+			var _s = d.s;  //滚动间隔
+
+
+			_con.clone().insertAfter(_con);//初始化克隆
+
+			//样式控制
+			var num = d.num;
+			var _p = this.find('li');
+			var allNum = _p.length;
+
+			_p.eq(num).addClass(_s);
+
+
+			var timeID = setInterval(Up,_time);
+			this.hover(function(){clearInterval(timeID)},function(){timeID = setInterval(Up,_time);});
+
+			function Up(){
+				_con.animate({marginTop: '-'+_conChildH});
+				//样式控制
+				_p.removeClass(_s);
+				num += 1;
+				_p.eq(num).addClass(_s);
+
+				if(_conH == _conChildH){
+					_con.animate({marginTop: '-'+_conChildH},"normal",over);
+				} else {
+					_conChildH += _temp;
+				}
+			}
+			function over(){
+				_con.attr("style",'margin-top:0');
+				_conChildH = _temp;
+				num = 1;
+				_p.removeClass(_s);
+				_p.eq(num).addClass(_s);
+			}
+		}
+	})(jQuery);
+	$('#MScroll').FontScroll({time: 3000,num: 1});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<script>
+
+
+	var SITE_URL = localStorage.getItem("SITE_URL");
+	var list = new Vue({
+		el: '#list',
+		data: {
+			collect:{},
+			list: [],
+		}
+	});
+
+	//list.collect = data.data.collect;
+	//list.list = data.data.list;
+    list.list =GetAllTask();
+	$.ajax({
+		type: "get",
+		url: SITE_URL +"/api/dy/GetTaskList",
+		data: {  },
+		dataType: "json",
+		success: function (data) {
+			if(data.status){
+				list.list = data.data;
+				AddToTask(data.data);
+			}else{
+				console.log(data.msg);
+			}
+		},error:function () {
+
+		}
+	});
+
+
+</script>
