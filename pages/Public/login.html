@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
     <title>登录</title>
-    <script type="text/javascript" src="/Public/js/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="/Public/js/jquery-form.js"></script>
-    <script type="text/javascript" src="/Public/js/layer_mobile2/layer.js"></script>
-    <script type="text/javascript" src="/Public/js/func.js"></script>
-		<script type="text/javascript" src="/Public/js/loch.js"></script>
+    <script type="text/javascript" src="../../Public/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="../../Public/js/jquery-form.js"></script>
+    <script type="text/javascript" src="../../Public/js/layer_mobile2/layer.js"></script>
+    <script type="text/javascript" src="../../Public/js/func.js"></script>
+		<script type="text/javascript" src="../../Public/js/loch.js"></script>
     <style>
         html,body,div,p,form,label,ul,li,dl,dt,dd,ol,img,button,b,em,strong,small,h1,h2,h3,h4,h5,h6{margin:0;padding:0;border:0;list-style:none;font-style:normal;}
         body{font-family:SimHei,'Helvetica Neue',Arial,'Droid Sans',sans-serif;font-size:14px;color:#333;background:#f2f2f2;}
@@ -16,7 +16,7 @@
         a, a.link:hover{color:#666;}
         h1,h2,h3,h4,h5,h6{font-weight: normal;}
         body{
-            background:url(/Public/images/login-bg.png) no-repeat;
+            background:url(../../Public/images/login-bg.png) no-repeat;
             background-size: 100% auto;
             /*background: #58afbd;*/
         }
@@ -35,7 +35,7 @@
 <body style="background: #fff;" >
 <div class="login">
     <form class="submit-ajax" action="/api/dy/Login">
-        <div class="welcome"><img src="/Public/images/logo.png" style="width: 138px;height: 138px;display: block;margin: 0 auto;"></div>
+        <div class="welcome"><img src="../../Public/images/logo.png" style="width: 138px;height: 138px;display: block;margin: 0 auto;"></div>
         <div class="login-form">
         	
         	
@@ -45,7 +45,8 @@
             
             <div class="login-inp" style="background: #f4f4f4;border: none;">
             	<label style="color: #999;">密码</label>
-            	<input type="password" name="password" id="password"  placeholder="请输入密码" class="password" autocomplete="off" style="color: #000;"/></div>
+            	<input type="password" name="password" id="password"  placeholder="请输入密码" class="password"
+                       autocomplete="off" style="color: #000;"/></div>
             	<p style="width: 80%;margin-left: 10%;margin-bottom: 0px;height: 30px;line-height: 30px;text-align: right;margin-top: -5px;font-weight: bold;color: #704eea;margin-bottom: 10px;">忘记密码？</p>
                 <input type="hidden" name="appkey" id="appkey" value="" />
                 <input type="hidden" name="userid" id="userid" value="" />

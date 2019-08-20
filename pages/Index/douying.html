@@ -7,20 +7,18 @@
     <meta name="keywords" content=""/>
     <meta name="description" content=""/>
     <title>抖音-任务大厅</title>
-    <link rel="stylesheet" href="/Public/css/share.css">
-    <link rel="stylesheet" href="/Public/css/font.css" />
+    <link rel="stylesheet" href="../../Public/css/share.css">
+    <link rel="stylesheet" href="../../Public/css/font.css" />
     <!--JQ-->
-    <script type="text/javascript" src="/Public/js/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="/Public/js/jquery-form.js"></script>
-    <script type="text/javascript" src="/Public/js/layer_mobile2/layer.js"></script>
-    <script type="text/javascript" src="/Public/js/swiper.3.1.7.min.js"></script>
-
-    <script src="/Public/js/jquery.simplesidebar.js"></script>
-    <script src="/Public/js/jquery.SuperSlide.2.1.1.js"></script>
-    <script src="/Public/js/TouchSlide.1.0.js"></script>
-
-    <script type="text/javascript" src="/Public/js/func.js"></script>
-		<script type="text/javascript" src="/Public/js/loch.js"></script>
+    <script type="text/javascript" src="../../Public/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="../../Public/js/jquery-form.js"></script>
+    <script type="text/javascript" src="../../Public/js/layer_mobile2/layer.js"></script>
+    <script type="text/javascript" src="../../Public/js/swiper.3.1.7.min.js"></script>
+    <script type="text/javascript" src="../../Public/js/jquery.simplesidebar.js"></script>
+    <script type="text/javascript" src="../../Public/js/jquery.SuperSlide.2.1.1.js"></script>
+    <script type="text/javascript" src="../../Public/js/TouchSlide.1.0.js"></script>
+    <script type="text/javascript" src="../../Public/js/func.js"></script>
+	<script type="text/javascript" src="../../Public/js/loch.js"></script>
     <script>
         var SITE_URL  =  localStorage.getItem("SITE_URL");
     </script>
@@ -37,7 +35,7 @@
     <div class="task_list" id="list">
         <a  :href="'../Task/show.html?id='+itms.id" v-for="(itms,index) in list"  >
         	<div class="index_rwxq" style="width: 92%;margin-left: 4%;">
-        		<img src="/Public/images/logo.png"/>
+        		<img src="../../Public/images/logo.png"/>
 
         		<div class="index_wzns"><p class="index_title">{{itms.nickname}}</p><p class="index_ffl"><span>{{itms.types}}</span> <span class="index_gjrw">优质任务</span> </p>
                     <p class="index_syrw">剩余数量：<span>{{(itms.total - itms.balance)>0?(itms.total - itms.balance):0 }}</span></p>

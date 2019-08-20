@@ -229,7 +229,7 @@ footer{
 	background: yellow;
 	display: block;
 	border-radius: 16px;
-	background: url(/Public/images/1.png)no-repeat;
+	background: url(../../Public/images/1.png)no-repeat;
 	background-size: 100% 100%;
 	float: left;
 }
@@ -240,7 +240,7 @@ footer{
 	background: yellow;
 	float: right;
 	border-radius: 16px;
-	background: url(/Public/images/2.png)no-repeat;
+	background: url(../../Public/images/2.png)no-repeat;
 	background-size: 100% 100%;
 }
 .index_rwlb{
@@ -259,7 +259,7 @@ footer{
 	font-size: 16px;
 	font-weight: bold;
 	line-height: 40px;
-	background:url(/Public/kf/HTB1vXR1emWD3KVjSZSg763CxVXaw.png)no-repeat #fff;
+	background:url(../../Public/kf/HTB1vXR1emWD3KVjSZSg763CxVXaw.png)no-repeat #fff;
 	padding-left: 50px;
 	box-sizing: border-box;
 }
@@ -311,7 +311,7 @@ footer{
 	display: inline-block;
 	margin-right: 2px;
 	border-radius: 6px;
-	background: url(/Public/kf/HTB1e0dwcRCw3KVjSZFu763AOpXat.png);
+	background: url(../../Public/kf/HTB1e0dwcRCw3KVjSZFu763AOpXat.png);
 	color: #a2824d;
 }
 .index_syrw{
@@ -331,7 +331,7 @@ footer{
 .index_qqq span{
 	width: 40px;
 	height: 20px;
-	background: url(/Public/kf/HTB1dGFxcGWs3KVjSZFx761WUXXaM.png)no-repeat;
+	background: url(../../Public/kf/HTB1dGFxcGWs3KVjSZFx761WUXXaM.png)no-repeat;
 	background-size: 100%;
 	display: inline-block;
 	position: absolute;
@@ -345,7 +345,7 @@ footer{
 	margin-left: 4%;
 	margin-top: 20px;
 	border-radius: 10px;
-	background: url(/Public/kf/HTB1W4Hdek9E3KVjSZFG76319XXaX.png)no-repeat;
+	background: url(../../Public/kf/HTB1W4Hdek9E3KVjSZFG76319XXaX.png)no-repeat;
 	background-size: 100% 100%;
 }
 .task_nav{
@@ -701,7 +701,7 @@ footer{
 .show_srwssss{
 	width: 100%;
 	height: 100%;
-	background: fff;
+	background: #fff;
 	float: left;
 	margin-bottom: 68px;
 }
