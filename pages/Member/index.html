@@ -75,7 +75,18 @@
 <script>
 
 $userinfo = localStorage.getItem("userinfo") ;
-if($userinfo)$userinfo = JSON.parse($userinfo) ;else  window.location.href ="../../pages/Public/login.html";
+if($userinfo)$userinfo = JSON.parse($userinfo) ;else {
+
+	load_index = layer.load(0, {
+		shade: false,
+		time: 6000
+	});
+	setTimeout(function () {
+		window.location.href ="../../pages/Public/login.html";
+	},1500)
+}
+
+
 
 var list = new Vue({
 	el: '#list',
