@@ -133,7 +133,7 @@
                         <div class="renwu_main_list_right">
                             <p class="orange">点赞小能手</p>
                             <p class="grey1"><span class="size60">128</span>/月</p>
-                            <a   class="renwu_list_button" >申请</a>
+                            <a   class="renwu_list_button" onclick="apply(0)" >申请</a>
                         </div>
                     </div>
                 </div>
@@ -154,7 +154,7 @@
                         <div class="renwu_main_list_right">
                             <p class="orange">点赞达人</p>
                             <p class="grey1"><span class="size60">288</span>/月</p>
-                            <a   class="renwu_list_button" >申请</a>
+                            <a   class="renwu_list_button" onclick="apply(1)">申请</a>
                         </div>
                     </div>
                 </div>
@@ -176,7 +176,7 @@
                         <div class="renwu_main_list_right">
                             <p class="orange">点赞无影手</p>
                             <p class="grey1"><span class="size60">388</span>/月</p>
-                            <a   class="renwu_list_button" >申请</a>
+                            <a   class="renwu_list_button"  onclick="apply(2)">申请</a>
                         </div>
                     </div>
                 </div>
@@ -193,3 +193,8 @@
 </body>
 
 </html><script type="text/javascript" src="../../Public/js/footer.js"></script>
+<script>
+    function apply(id) {
+        sp_alert_reload("您的账户余额不足!");
+    }
+</script>
