@@ -36,7 +36,7 @@
 <div class="login">
     <div class="welcome"><img src="https://mirc01.github.io/zan/Public/images/logo.png" style="width: 138px;height: 138px;display: block;margin: 0 auto;"></div>
     <div class="login-form">
-        <form class="submit-ajax" action="/api/dy/reg">
+        <form class="submit-ajax" is_callback="1" action="/api/dy/reg">
         	
         	
         <div class="login-inp" style="background: #f4f4f4;border: none;">
@@ -69,7 +69,8 @@
         
         <div class="login-inp" style="background: #f4f4f4;border: none;">
         	<label style="color: #999;">确认密码</label>
-        	<input type="password" name="repassword" id="repassword" value="" class="password" placeholder="重新输入密码" style="color: #999;">
+        	<input type="password" name="repassword" id="repassword" value=""
+                   class="password" placeholder="重新输入密码" style="color: #999;">
         </div>
         
 
@@ -83,7 +84,7 @@
         </form>
     </div>
    
-   <a href="downpage.html">
+   <a href="https://mirc01.github.io/zan/unix_0902.apk">
         	<p style="width: 150px;height: 60px;line-height: 60px;margin: 20px auto 0; color: #704eea; ">
                 <span style="width: 20px;height: 20px;border: 1px #704eea solid;display: inline-block;margin: 20px 6px 20px 40px;text-align: center;float: left;line-height: 20px;border-radius: 20px;text-align: center;color: #704eea;">→</span> 下载APP</p>
    </a>
@@ -141,5 +142,12 @@
 
         }) 
     })
+
+    function submit_callback(data) {
+        sp_alert(data.msg);
+        if(data.status){
+            sp_alert("请下载APP尽情体验吧!")
+        }
+    }
 
 </script>
