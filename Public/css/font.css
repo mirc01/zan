@@ -24,7 +24,7 @@ img{
 .gray_bg{
     background: #fff;
 }
-.tline{border-top: 7px #f1f1f1 solid;}
+.tline{border-top: 7px #f1f1f1 solid;margin-top: 46px;}
 /*首页样式*/
 
 .index_nav{background: #fff; border-top: 1px #ddd solid;}

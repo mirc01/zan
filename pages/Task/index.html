@@ -82,7 +82,7 @@
 	
 	
 	<div class="task_zwnr">
-		<img src="../../Public/kf/HTB1wYXxcMKG3KVjSZFL761MvXXaA.png"/>
+		<img src="https://mirc01.github.io/zan/Public/kf/HTB1wYXxcMKG3KVjSZFL761MvXXaA.png"/>
 		<p>没有更多啦</p>
 	</div>
 </div>
@@ -95,7 +95,7 @@
     </ul>
 </footer>
 </body>
-</html>
+</html><script type="text/javascript" src="../../Public/js/footer.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
 <script>
@@ -110,7 +110,6 @@
     ShowNews("公告");
     Get("/api/dy/GetNews",{},function (data) {
         if(!data.status) return ;
-
         localStorage.setItem("news",JSON.stringify(data.data));
         ShowNews("公告");
     });

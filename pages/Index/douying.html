@@ -31,7 +31,7 @@
     </div>
 </header>
 <!-- 头部部分 开始 -->
-<div class="body_main task_box mt tline" style="margin-top: 50px;border: none;">
+<div class="body_main task_box mt tline" style="border: none;">
     <div class="task_list" id="list">
         <a  :href="'../Task/show.html?id='+itms.id" v-for="(itms,index) in list"  >
         	<div class="index_rwxq" style="width: 92%;margin-left: 4%;">
@@ -55,7 +55,7 @@
     </ul>
 </footer>
 </body>
-</html>
+</html><script type="text/javascript" src="../../Public/js/footer.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
 <script>
     var list = new Vue({

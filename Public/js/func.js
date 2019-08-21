@@ -399,7 +399,7 @@ function DoAjax(url,data,fnt,type) {
         success: function (data) {
             fnt(data);
         },error:function () {
-            fnt({msg:"网络异常!",status:0,data:false});
+            fnt({msg:"请登陆!",status:0,data:false});
         }
     });
 }

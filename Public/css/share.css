@@ -21,7 +21,7 @@ a{
 .clear{
     clear: both;
 }
-.mt80,.mt{margin-top: 46px;}
+/*.mt80,.mt{margin-top: 46px;}*/
 /* 头部部分 */
 header.top_header{
     background-color: #704eea;
@@ -345,7 +345,7 @@ footer{
 	margin-left: 4%;
 	margin-top: 20px;
 	border-radius: 10px;
-	background: url(../../Public/kf/HTB1W4Hdek9E3KVjSZFG76319XXaX.png)no-repeat;
+	background: url(../../Public/kf/HTB1W4Hdek9E3KVjSZFG76319XXaX.jpg)no-repeat;
 	background-size: 100% 100%;
 }
 .task_nav{
